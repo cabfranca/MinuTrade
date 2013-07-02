@@ -1,0 +1,79 @@
+﻿@model IEnumerable<SGC.Comum.Entities.Contato>
+
+@{
+    ViewBag.Title = "Lista de Contatos";
+}
+
+<h2>Lista de Contatos</h2>
+
+@using (Html.BeginForm("Carrega", "Contato", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+                &nbsp;
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+                &nbsp;
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataNascimento)
+                &nbsp;
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Celular)
+                &nbsp;
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TelefoneResidencial)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td style="@(item.EmailValido() ? "" : "color:red")">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td  style="@(item.DataValida() ? "" : "color:red")">
+                    @Html.DisplayFor(modelItem => item.DataNascimento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Celular)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TelefoneResidencial)
+                </td>
+            </tr>
+        }
+    </table>
+     <br />
+    <div style="color:red">
+        * Campos em vermelho = Campo com formato inválido
+    </div>
+    <br />
+    <br />
+    <table>
+        <tr>
+            <td class="editor-label">Arquivo de Carga
+            </td>
+        </tr>
+        <tr>
+            <td class="editor-field">
+                <input type="file" name="Upload" style="width:500px"   />
+            </td>
+        </tr> 
+        <tr>
+            <td class="editor-field">
+                <input type="submit" value="Carregar" />
+            </td>
+        </tr>
+    </table>
+        
+}
